@@ -1,13 +1,20 @@
 {
   "name": "novashift",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "map-stream": "^0.1.0",
+    "three": "^0.67.0",
+    "vinyl-source-stream": "^0.1.1"
+  },
   "devDependencies": {
+    "browserify": "^4.1.6",
     "connect": "^2.14.4",
     "connect-livereload": "^0.4.0",
+    "es6ify": "^1.1.0",
     "gulp": "^3.6.0",
     "gulp-autoprefixer": "^0.0.7",
     "gulp-bower-files": "^0.2.1",
+    "gulp-browserify": "^0.5.0",
     "gulp-cache": "^0.1.1",
     "gulp-clean": "^0.2.4",
     "gulp-csso": "^0.2.6",
@@ -19,9 +26,9 @@
     "gulp-load-plugins": "^0.5.0",
     "gulp-ruby-sass": "^0.4.3",
     "gulp-size": "^0.3.0",
+    "gulp-traceur": "^0.6.0",
     "gulp-uglify": "^0.2.1",
     "gulp-useref": "^0.4.2",
-    "gulp-traceur": "^0.6.0",
     "jshint-stylish": "^0.2.0",
     "opn": "^0.1.1",
     "wiredep": "^1.4.3"
