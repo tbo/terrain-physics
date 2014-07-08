@@ -1,8 +1,26 @@
-// var canvas = document.getElementById("renderCanvas");
-var three = require('three');
-console.log(three);
-// var square = (x) => {
-  // return x * x;
-// };
-// var square2 = x => x * x;
-// console.log(square(2));
+'use strict';
+var renderer = require('./renderer');
+
+var gameState = {
+    state: {value: 1},
+    transform: function(transformer) {
+        transformer(this.state);
+        return this;
+    },
+    sink: function(sink) {
+        sink(this.state);
+    }
+};
+
+function echo(test) { console.log(test); test.value++;}
+
+function gameLoop() {
+    requestAnimationFrame(gameLoop);  // jshint ignore:line
+    gameState
+        .sink(renderer.render);
+}
+
+window.onload = function() {
+    renderer.initialize();
+    gameLoop();
+};

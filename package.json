@@ -2,8 +2,10 @@
   "name": "novashift",
   "version": "0.0.0",
   "dependencies": {
+    "cannon": "^0.5.0",
     "map-stream": "^0.1.0",
     "three": "^0.67.0",
+    "traceur-runtime": "0.0.43",
     "vinyl-source-stream": "^0.1.1"
   },
   "devDependencies": {

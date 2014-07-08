@@ -4,9 +4,7 @@
 var gulp = require('gulp');
 var es6ify = require('es6ify');
 var browserify = require('browserify');
-var map = require('map-stream');
 var source = require('vinyl-source-stream');
-var cat = require('gulp-cat');
 
 // load plugins
 var $ = require('gulp-load-plugins')();
@@ -106,7 +104,7 @@ gulp.task('serve', ['connect', 'styles'], function () {
     require('opn')('http://localhost:9000');
 });
 
-gulp.task('watch', ['connect', 'serve'], function () {
+gulp.task('watch', ['browserify', 'connect', 'serve'], function () {
     var server = $.livereload();
 
     // watch for changes
