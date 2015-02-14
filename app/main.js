@@ -11,7 +11,7 @@ stats.domElement.style.position = 'absolute';
 stats.domElement.style.left = '0px';
 stats.domElement.style.top = '0px';
 
-function echo(test) { console.log(test.player.position); }
+function echo(test) { console.log(test.player.rotation); }
 
 function gameLoop() {
     stats.begin();
@@ -19,7 +19,7 @@ function gameLoop() {
         .pipe(timing)
         .pipe(controls)
         .pipe(physics)
-        // .transform(echo)
+        // .pipe(echo)
         .pipe(renderer.render);
     stats.end();
     requestAnimationFrame(gameLoop);  // jshint ignore:line

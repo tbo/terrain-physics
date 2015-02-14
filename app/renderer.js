@@ -50,13 +50,17 @@ camera.position.y = -10;
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 
-// renderer.shadowMapEnabled = true;
+renderer.shadowMapEnabled = true;
 renderer.shadowMapCullFace = THREE.CullFaceBack;
 
 function render (gameState) {
     player.position.x = gameState.player.position.x;
     player.position.y = gameState.player.position.y;
     player.position.z = gameState.player.position.z;
+    player.quaternion.x = gameState.player.rotation.x;
+    player.quaternion.y = gameState.player.rotation.y;
+    player.quaternion.z = gameState.player.rotation.z;
+    player.quaternion.w = gameState.player.rotation.w;
     camera.position.x = player.position.x;
     camera.lookAt(player.position);
     camera.rotation.z = 0;

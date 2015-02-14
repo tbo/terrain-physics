@@ -6,6 +6,8 @@ var gameState = {
                 y: 0,
                 z: 6
             },
+            rotation: {
+            },
             movement: {}
         }]
     },

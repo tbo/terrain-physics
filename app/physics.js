@@ -47,5 +47,5 @@ module.exports = function(gameState) {
     gameState.player.position.x = sphereBody.position.x;
     gameState.player.position.y = sphereBody.position.y;
     gameState.player.position.z = sphereBody.position.z;
-    // sphereBody.quaternion.copy(cube.quaternion);
+    sphereBody.quaternion.copy(gameState.player.rotation);
 };
