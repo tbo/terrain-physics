@@ -9,21 +9,17 @@ function addLights() {
     }
 }
 
-function createPlayer() {
-    var geometry = new THREE.BoxGeometry(1,1,1);
-    var material = new THREE.MeshLambertMaterial({color: 0x00ff00});
-    var playerMesh = new THREE.Mesh(geometry, material);
-    playerMesh.castShadow = true;
-    return playerMesh;
+function getRandomColor() {
+    return '#'+Math.floor(Math.random()*16777215).toString(16);
 }
 
-function createObstacle() {
-    var obstacleGeometry = new THREE.BoxGeometry(6,4,4);
-    var obstacleMaterial = new THREE.MeshLambertMaterial({color: 0xff0000});
-    var obstacle = new THREE.Mesh(obstacleGeometry, obstacleMaterial);
-    obstacle.castShadow = true;
-    obstacle.position.set(5,0,2);
-    return obstacle;
+function createCube() {
+    var geometry = new THREE.BoxGeometry(1,1,1);
+    var material = new THREE.MeshLambertMaterial({color: getRandomColor()});
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    return mesh;
 }
 
 addLights();
@@ -32,10 +28,6 @@ var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeigh
 
 var renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
-
-var player = createPlayer();
-scene.add(player);
-scene.add(createObstacle());
 
 var groundGeo = new THREE.PlaneGeometry( 10000, 10000 );
 var groundMat = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0xffffff, specular: 0x050505 } );
@@ -53,18 +45,56 @@ renderer.gammaOutput = true;
 renderer.shadowMapEnabled = true;
 renderer.shadowMapCullFace = THREE.CullFaceBack;
 
+function bootstrappingObjects(bootstrapping) {
+    var bootstrapLength = bootstrapping.length;
+    if(bootstrapLength) {
+        var mesh = null, obj = null;
+        for(var i = 0; i < bootstrapLength; i++) {
+            obj = bootstrapping[i];
+            switch(obj.type) {
+                case 'cube': 
+                    mesh = createCube();
+                    break;
+                default:
+                    console.warn('Type:', obj.type, 'unknown');
+                    continue;
+            }
+            scene.add(mesh);
+            obj.mesh = mesh;
+        }
+    }
+}
+
+function removeObjects(tombstoned) {
+    var tombstonedLength = tombstoned.length;
+    if(tombstonedLength) {
+        for(var i = 0; i < tombstonedLength; i++) {
+            scene.remove(tombstoned[i].mesh);
+        }
+    }
+}
+
+function updatePositions(objects) {
+    var objectsLength = objects.length;
+    for(var i = 0; i < objectsLength; i++) {
+        objects[i].mesh.position.x = objects[i].body.position.x;
+        objects[i].mesh.position.y = objects[i].body.position.y;
+        objects[i].mesh.position.z = objects[i].body.position.z;
+        objects[i].mesh.quaternion.x = objects[i].body.quaternion.x;
+        objects[i].mesh.quaternion.y = objects[i].body.quaternion.y;
+        objects[i].mesh.quaternion.z = objects[i].body.quaternion.z;
+        objects[i].mesh.quaternion.w = objects[i].body.quaternion.w;
+    }
+}
+
 function render (gameState) {
-    player.position.x = gameState.player.position.x;
-    player.position.y = gameState.player.position.y;
-    player.position.z = gameState.player.position.z;
-    player.quaternion.x = gameState.player.rotation.x;
-    player.quaternion.y = gameState.player.rotation.y;
-    player.quaternion.z = gameState.player.rotation.z;
-    player.quaternion.w = gameState.player.rotation.w;
-    camera.position.x = player.position.x;
-    camera.lookAt(player.position);
+    bootstrappingObjects(gameState.bootstrapping);
+    updatePositions(gameState.objects);
+    camera.position.x = gameState.player.mesh.position.x;
+    camera.lookAt(gameState.player.mesh.position);
     camera.rotation.z = 0;
     renderer.render(scene, camera);
+    removeObjects(gameState.tombstoned);
 }
 
 function initialize () {

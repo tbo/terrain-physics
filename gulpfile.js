@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var gutil = require('gutil');
 var es6ify = require('es6ify');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
@@ -89,7 +90,6 @@ gulp.task('connect', function () {
 });
 
 gulp.task('serve', ['connect'], function () {
-    require('opn')('http://localhost:9000');
 });
 
 gulp.task('watch', ['browserify', 'connect', 'serve'], function () {
@@ -106,5 +106,4 @@ gulp.task('watch', ['browserify', 'connect', 'serve'], function () {
     });
 
     gulp.watch('app/**/*.js', ['scripts', 'browserify']);
-    // gulp.watch('app/images/**/*', ['images']);
 });
