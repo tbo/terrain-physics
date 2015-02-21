@@ -1,6 +1,6 @@
 var CANNON = require('cannon');
 
-var baseImpulse = 4;
+var baseImpulse = 0.2;
 
 var world = new CANNON.World();
 world.gravity.set(0,0,-9.82);
@@ -57,29 +57,30 @@ function removeObjects(tombstoned) {
     }
 }
 
-function movePlayer(player) {
+function movePlayer(player, delta) {
     var velocity = player.body.velocity,
-        movement = player.movement;
+        movement = player.movement,
+        relativeImpulse = baseImpulse * delta;
     if (movement.forward) {
-        velocity.y = baseImpulse;
+        velocity.y = relativeImpulse;
     }
     if (movement.backward) {
-        velocity.y = -baseImpulse;
+        velocity.y = -relativeImpulse ;
     }
     if (movement.up) {
-        velocity.z = baseImpulse;
+        velocity.z = relativeImpulse ;
     }
     if (movement.right) {
-        velocity.x = baseImpulse;
+        velocity.x = relativeImpulse ;
     }
     if (movement.left) {
-        velocity.x = -baseImpulse;
+        velocity.x = -relativeImpulse ;
     }
 }
 
 module.exports = function(gameState) {
     bootstrappingObjects(gameState.bootstrapping);
-    movePlayer(gameState.player);
-    world.step(1.0/60.0, gameState.timing.delta / 1000, 3);
+    movePlayer(gameState.player, gameState.timing.delta);
+    world.step(1.0/60.0, gameState.timing.delta / 1000, 10);
     removeObjects(gameState.tombstoned);
 };
