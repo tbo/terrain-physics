@@ -1,4 +1,3 @@
-'use strict';
 var THREE = require('three');
 var lights = require('./lights');
 var scene = new THREE.Scene();
@@ -10,11 +9,11 @@ function addLights() {
 }
 
 function getRandomColor() {
-    return '#'+Math.floor(Math.random()*16777215).toString(16);
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
 
 function createCube() {
-    var geometry = new THREE.BoxGeometry(1,1,1);
+    var geometry = new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshLambertMaterial({color: getRandomColor()});
     var mesh = new THREE.Mesh(geometry, material);
     mesh.castShadow = true;
@@ -24,7 +23,7 @@ function createCube() {
 
 addLights();
 
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 var renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -52,7 +51,7 @@ function bootstrappingObjects(bootstrapping) {
         for(var i = 0; i < bootstrapLength; i++) {
             obj = bootstrapping[i];
             switch(obj.type) {
-                case 'cube': 
+                case 'cube':
                     mesh = createCube();
                     break;
                 default:

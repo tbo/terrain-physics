@@ -3,4 +3,3 @@ module.exports = function(gameState) {
     gameState.bootstrapping.length = 0;
     gameState.tombstoned.length = 0;
 };
-

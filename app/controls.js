@@ -11,7 +11,9 @@ var KEYCODE_D = 68;
 var left = false;
 var right = false;
 var up = false;
-var down = false; // jshint ignore:line
+/*eslint-disable*/
+var down = false;
+/*eslint-enable*/
 var forward = false;
 var backward = false;
 
@@ -19,18 +21,18 @@ function onKey(v) {
     return function ( event ) {
         // event.preventDefault();
         switch ( event.keyCode ) {
-            case KEYCODE_LEFT: 
+            case KEYCODE_LEFT:
             case KEYCODE_A: left = v; break;
 
-            case KEYCODE_RIGHT: 
+            case KEYCODE_RIGHT:
             case KEYCODE_D: right = v; break;
 
             case KEYCODE_SPACE: up = v; break;
 
-            case KEYCODE_UP: 
+            case KEYCODE_UP:
             case KEYCODE_W: forward = v; break;
 
-            case KEYCODE_DOWN: 
+            case KEYCODE_DOWN:
             case KEYCODE_S: backward = v; break;
         }
     };

@@ -1,4 +1,3 @@
-'use strict';
 var renderer = require('./renderer');
 var controls = require('./controls');
 var timing = require('./timing');
@@ -12,7 +11,9 @@ stats.domElement.style.position = 'absolute';
 stats.domElement.style.left = '0px';
 stats.domElement.style.top = '0px';
 
-function echo(gameState) { console.log(gameState.player.body.position); } // jshint ignore:line
+/*eslint-disable*/
+function echo(g) { console.log(g.player.body.position); }
+/*eslint-enable*/
 
 
 function gameLoop() {
@@ -25,7 +26,7 @@ function gameLoop() {
         .pipe(renderer.render)
         .pipe(stateManager);
     stats.end();
-    requestAnimationFrame(gameLoop);  
+    requestAnimationFrame(gameLoop);
 }
 
 window.onload = function() {

@@ -3,7 +3,7 @@ var CANNON = require('cannon');
 var baseImpulse = 0.2;
 
 var world = new CANNON.World();
-world.gravity.set(0,0,-9.82);
+world.gravity.set(0, 0, -9.82);
 world.broadphase = new CANNON.NaiveBroadphase();
 world.solver.iterations = 10;
 world.defaultContactMaterial.contactEquationStiffness = 1e8;
@@ -21,7 +21,7 @@ var box = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
 function createCube (x, y, z) {
     var cube = new CANNON.Body({
         mass: 5, // kg
-        position: new CANNON.Vec3(x, y, z), // m
+        position: new CANNON.Vec3(x, y, z) // m
     });
     cube.addShape(box);
     return cube;
@@ -65,22 +65,22 @@ function movePlayer(player, delta) {
         velocity.y = relativeImpulse;
     }
     if (movement.backward) {
-        velocity.y = -relativeImpulse ;
+        velocity.y = -relativeImpulse;
     }
     if (movement.up) {
-        velocity.z = relativeImpulse ;
+        velocity.z = relativeImpulse;
     }
     if (movement.right) {
-        velocity.x = relativeImpulse ;
+        velocity.x = relativeImpulse;
     }
     if (movement.left) {
-        velocity.x = -relativeImpulse ;
+        velocity.x = -relativeImpulse;
     }
 }
 
 module.exports = function(gameState) {
     bootstrappingObjects(gameState.bootstrapping);
     movePlayer(gameState.player, gameState.timing.delta);
-    world.step(1.0/60.0, gameState.timing.delta / 1000, 10);
+    world.step(1.0 / 60.0, gameState.timing.delta / 1000, 10);
     removeObjects(gameState.tombstoned);
 };

@@ -1,0 +1,13 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "rules": {
+        "brace-style": "1tbs",
+        "quotes": [2, "single"],
+        "strict": [2, "never"],
+        "eol-last": 0
+    }
+}
