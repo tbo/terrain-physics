@@ -2,17 +2,17 @@
   "name": "novashift",
   "version": "0.2.0",
   "dependencies": {
-    "babel-core": "^5.2.0",
-    "babel-loader": "^5.0.0",
-    "cannon": "^0.6.2",
-    "eslint": "^0.20.0",
-    "eslint-loader": "^0.11.1",
-    "fullscreen": "^1.0.0",
+    "babel-core": "5.2.17",
+    "babel-loader": "5.0.0",
+    "cannon": "0.6.2",
+    "eslint": "0.20.0",
+    "eslint-loader": "0.11.1",
+    "fullscreen": "1.0.0",
     "pointer-lock": "0.0.4",
-    "stats-js": "^1.0.0-alpha1",
+    "stats-js": "1.0.0-alpha1",
     "three": "0.71.0",
-    "webpack": "^1.8.11",
-    "webpack-dev-server": "^1.8.2"
+    "webpack": "1.8.11",
+    "webpack-dev-server": "1.8.2"
   },
   "engines": {
     "node": ">=0.10.0"
@@ -21,6 +21,6 @@
     "watch": "./node_modules/.bin/webpack-dev-server --port 9000 --content-base build --hot --inline"
   },
   "devDependencies": {
-    "json-loader": "^0.5.1"
+    "json-loader": "0.5.1"
   }
 }
