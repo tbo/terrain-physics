@@ -4,12 +4,7 @@ var timing = require('./timing');
 var physics = require('./physics');
 var gameState = require('./gameState');
 var stateManager = require('./stateManager');
-
-var stats = require('stats-js')();
-// stats.setMode(1);
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.left = '0px';
-stats.domElement.style.top = '0px';
+var stats = require('./stats');
 
 /*eslint-disable*/
 function echo(g) { console.log(g.player.body.position); }
@@ -17,20 +12,18 @@ function echo(g) { console.log(g.player.body.position); }
 
 
 function gameLoop() {
-    stats.begin();
     gameState
         .pipe(timing)
         .pipe(controls)
         .pipe(physics)
         // .pipe(echo)
         .pipe(renderer)
-        .pipe(stateManager);
-    stats.end();
+        .pipe(stateManager)
+        .pipe(stats);
     requestAnimationFrame(gameLoop);
 }
 
 window.addEventListener('load', function() {
-    document.body.appendChild( stats.domElement );
     window.gameState = gameState;
     gameLoop();
 });
