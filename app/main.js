@@ -23,15 +23,14 @@ function gameLoop() {
         .pipe(controls)
         .pipe(physics)
         // .pipe(echo)
-        .pipe(renderer.render)
+        .pipe(renderer)
         .pipe(stateManager);
     stats.end();
     requestAnimationFrame(gameLoop);
 }
 
-window.onload = function() {
-    renderer.initialize();
+window.addEventListener('load', function() {
     document.body.appendChild( stats.domElement );
     window.gameState = gameState;
     gameLoop();
-};
+});

@@ -30,6 +30,8 @@ var gameState = {
     }
 };
 gameState.add('cube', 0, 0, 6);
+gameState.add('tower', 20, 50, 20);
+gameState.add('tower', -20, 20, 20);
 gameState.state.player = gameState.state.bootstrapping[0];
 
 module.exports = gameState;

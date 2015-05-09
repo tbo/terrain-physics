@@ -13,7 +13,16 @@ function getRandomColor() {
 }
 
 function createCube() {
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
+    var geometry = new THREE.BoxGeometry(0.01, 0.01, 0.01);
+    var material = new THREE.MeshLambertMaterial({color: getRandomColor()});
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    return mesh;
+}
+
+function createTower() {
+    var geometry = new THREE.BoxGeometry(10, 10, 40);
     var material = new THREE.MeshLambertMaterial({color: getRandomColor()});
     var mesh = new THREE.Mesh(geometry, material);
     mesh.castShadow = true;
@@ -24,20 +33,21 @@ function createCube() {
 addLights();
 
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 0;
+camera.position.y = -1;
+camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 var renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-var groundGeo = new THREE.PlaneGeometry( 10000, 10000 );
-var groundMat = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0xffffff, specular: 0x050505 } );
+var groundGeo = new THREE.PlaneBufferGeometry(1000, 1000, 300, 300);
+var groundMat = new THREE.MeshBasicMaterial({wireframe: true});
 groundMat.color.setHSL( 0.095, 1, 0.75 );
 
 var ground = new THREE.Mesh( groundGeo, groundMat );
 scene.add( ground );
 
 ground.receiveShadow = true;
-camera.position.z = 6;
-camera.position.y = -10;
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 
@@ -53,6 +63,9 @@ function bootstrappingObjects(bootstrapping) {
             switch(obj.type) {
                 case 'cube':
                     mesh = createCube();
+                    break;
+                case 'tower':
+                    mesh = createTower();
                     break;
                 default:
                     console.warn('Type:', obj.type, 'unknown');
@@ -86,21 +99,21 @@ function updatePositions(objects) {
     }
 }
 
-function render (gameState) {
+function updateCamera(mesh) {
+    if(camera.parent !== mesh) {
+        mesh.add(camera);
+        camera.rotation.z = 0;
+    }
+}
+
+module.exports = function (gameState) {
     bootstrappingObjects(gameState.bootstrapping);
     updatePositions(gameState.objects);
-    camera.position.x = gameState.player.mesh.position.x;
-    camera.lookAt(gameState.player.mesh.position);
-    camera.rotation.z = 0;
+    updateCamera(gameState.player.mesh);
     renderer.render(scene, camera);
     removeObjects(gameState.tombstoned);
-}
-
-function initialize () {
-    document.body.appendChild(renderer.domElement);
-}
-
-module.exports = {
-    initialize: initialize,
-    render: render
 };
+
+window.addEventListener('load', function () {
+    document.body.appendChild(renderer.domElement);
+});
