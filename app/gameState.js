@@ -1,21 +1,20 @@
 function getObjectPrototype() {
     return {
-        position: {},
-        rotation: {},
         movement: {}
     };
 }
 
 var gameState = {
     state: {
+        map: [],
         objects: [],
         bootstrapping: [],
         tombstoned: []
     },
-    add(type, x, y, z) {
+    add(type, props) {
         var newObject = getObjectPrototype();
         newObject.type = type;
-        newObject.initialPosition = {x, y, z};
+        newObject.props = props;
         return this.state.bootstrapping.push(newObject) - 1;
     },
     remove(index) {
@@ -29,9 +28,9 @@ var gameState = {
         return this;
     }
 };
-gameState.add('cube', 0, 0, 6);
-gameState.add('tower', 20, 50, 20);
-gameState.add('tower', -20, 20, 20);
+gameState.add('cube', {x: 0, y: 0, z: 10});
+gameState.add('tower', {x: 20, y: 50, z: 20});
+gameState.add('tower', {x: -20, y: 20, z: 20});
 gameState.state.player = gameState.state.bootstrapping[0];
 
 module.exports = gameState;

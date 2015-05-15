@@ -1,5 +1,10 @@
+var currentItem;
 module.exports = function(gameState) {
-    gameState.objects = gameState.objects.concat(gameState.bootstrapping);
+    while((currentItem = gameState.bootstrapping.pop()) !== undefined) {
+        if (!currentItem.props.static) {
+            gameState.objects.push(currentItem);
+        }
+    }
     gameState.bootstrapping.length = 0;
     gameState.tombstoned.length = 0;
 };

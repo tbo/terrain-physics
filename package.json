@@ -18,7 +18,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "watch": "./node_modules/.bin/webpack-dev-server --port 9000 --content-base build --hot --inline"
+    "watch": "./node_modules/.bin/webpack-dev-server --host 192.168.2.109 --port 9000 --content-base build --hot --inline"
   },
   "devDependencies": {
     "json-loader": "0.5.1"

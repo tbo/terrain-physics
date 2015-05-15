@@ -1,62 +1,20 @@
 var CANNON = require('cannon');
-
+var bodyFactory = require('./bodyFactory');
 var world = new CANNON.World();
 world.gravity.set(0, 0, -9.82);
 world.broadphase = new CANNON.NaiveBroadphase();
 world.solver.iterations = 10;
 world.defaultContactMaterial.contactEquationStiffness = 1e8;
 world.defaultContactMaterial.contactEquationRegularizationTime = 10;
-// Static ground plane
-// Static bodies only interacts with dynamic bodies. Velocity is always zero.
-var groundShape = new CANNON.Plane();
-var groundBody = new CANNON.Body({
-    mass: 0  // mass=0 will produce a static body automatically
-});
-groundBody.addShape(groundShape);
-world.add(groundBody);
-var box = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
-var tower = new CANNON.Box(new CANNON.Vec3(5, 5, 20));
-
-function createCube (x, y, z) {
-    var cube = new CANNON.Body({
-        mass: 2000, // kg
-        angularDamping: 0.9,
-        linearDamping: 0.28,
-        position: new CANNON.Vec3(x, y, z) // m
-    });
-    cube.addShape(box);
-    return cube;
-}
-
-function createTower (x, y, z) {
-    var cube = new CANNON.Body({
-        mass: 10000, // kg
-        position: new CANNON.Vec3(x, y, z) // m
-    });
-    cube.addShape(tower);
-    return cube;
-}
 
 function bootstrappingObjects(bootstrapping) {
     var bootstrapLength = bootstrapping.length;
     if (bootstrapLength) {
-        var body = null,
-            obj = null;
+        var obj = null;
         for (var i = 0; i < bootstrapLength; i++) {
             obj = bootstrapping[i];
-            switch (obj.type) {
-                case 'cube':
-                    body = createCube(obj.initialPosition.x, obj.initialPosition.y, obj.initialPosition.z);
-                    break;
-                case 'tower':
-                    body = createTower(obj.initialPosition.x, obj.initialPosition.y, obj.initialPosition.z);
-                    break;
-                default:
-                    console.warn('Type:', obj.type, 'unknown');
-                    continue;
-            }
-            world.add(body);
-            obj.body = body;
+            obj.body = bodyFactory[obj.type](obj.props);
+            world.add(obj.body);
         }
     }
 }
