@@ -4,8 +4,17 @@ function getRandomColor() {
     return '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
 
-function createCube() {
+function createPlayer() {
     var geometry = new THREE.BoxGeometry(0.01, 0.01, 0.01);
+    var material = new THREE.MeshLambertMaterial({color: getRandomColor()});
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    return mesh;
+}
+
+function createCube() {
+    var geometry = new THREE.BoxGeometry(10, 10, 10);
     var material = new THREE.MeshLambertMaterial({color: getRandomColor()});
     var mesh = new THREE.Mesh(geometry, material);
     mesh.castShadow = true;
@@ -32,18 +41,15 @@ function createGround(props) {
     // var vertices = groundGeo.vertices;
     var vertices = groundGeo.attributes.position.array;
     for ( var i = 0, j = 0, l = vertices.length; i < l; i++, j += 3 ) {
-        vertices[j + 2] = heightMap[i] - 31;
+        vertices[j + 2] = heightMap[i];
     }
-    // for ( var i = 0, j = 0, l = vertices.length; i < l; i++, j += 3 ) {
-    //     console.log(heightMap[i]);
-    //     vertices[i].z = heightMap[i] || 100;
-    // }
     var ground = new THREE.Mesh(groundGeo, groundMat);
     ground.receiveShadow = true;
     return ground;
 }
 
 module.exports = {
+    player: createPlayer,
     cube: createCube,
     tower: createTower,
     ground: createGround

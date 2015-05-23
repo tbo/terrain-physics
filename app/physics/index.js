@@ -3,7 +3,8 @@ var bodyFactory = require('./bodyFactory');
 var world = new CANNON.World();
 world.gravity.set(0, 0, -9.82);
 world.broadphase = new CANNON.NaiveBroadphase();
-world.solver.iterations = 10;
+world.solver.iterations = 1;
+world.allowSleep = true;
 world.defaultContactMaterial.contactEquationStiffness = 1e8;
 world.defaultContactMaterial.contactEquationRegularizationTime = 10;
 

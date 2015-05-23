@@ -28,9 +28,17 @@ var gameState = {
         return this;
     }
 };
-gameState.add('cube', {x: 0, y: 0, z: 10});
-gameState.add('tower', {x: 20, y: 50, z: 20});
-gameState.add('tower', {x: -20, y: 20, z: 20});
+gameState.add('player', {x: 0, y: 5, z: 100});
+gameState.add('cube', {x: 50, y: 0, z: 100});
+var initX = -400;
+var initY = -400;
+for(var i = 0; i < 10; i++) {
+    for(var j = 0; j < 10; j++) {
+        gameState.add('cube', {x: initX + i * 100, y: initY + j * 100, z: 100});
+    }
+}
+gameState.add('tower', {x: 0, y: 45, z: 100});
+// gameState.add('tower', {x: -20, y: 20, z: 20});
 gameState.state.player = gameState.state.bootstrapping[0];
 
 module.exports = gameState;
