@@ -1,7 +1,8 @@
 var CANNON = require('cannon');
-var box = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+var player = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+var box = new CANNON.Box(new CANNON.Vec3(5, 5, 5));
 var tower = new CANNON.Box(new CANNON.Vec3(5, 5, 20));
-var sphere = new CANNON.Sphere(1);
+var sphere = new CANNON.Sphere(5);
 
 function createPlayer(props) {
     var cube = new CANNON.Body({
@@ -10,13 +11,23 @@ function createPlayer(props) {
         linearDamping: 0.28,
         position: new CANNON.Vec3(props.x, props.y, props.z)
     });
-    cube.addShape(box);
+    cube.addShape(player);
     return cube;
 }
 
 function createCube(props) {
     var cube = new CANNON.Body({
-        mass: 20, // kg
+        mass: 50, // kg
+        position: new CANNON.Vec3(props.x, props.y, props.z)
+    });
+    cube.addShape(box);
+    cube.allowSleep = true;
+    return cube;
+}
+
+function createSphere(props) {
+    var cube = new CANNON.Body({
+        mass: 50, // kg
         position: new CANNON.Vec3(props.x, props.y, props.z)
     });
     cube.addShape(sphere);
@@ -30,6 +41,7 @@ function createTower(props) {
         position: new CANNON.Vec3(props.x, props.y, props.z)
     });
     cube.addShape(tower);
+    cube.allowSleep = true;
     return cube;
 }
 
@@ -56,6 +68,7 @@ function createGround(props) {
 module.exports = {
     player: createPlayer,
     cube: createCube,
+    sphere: createSphere,
     tower: createTower,
     ground: createGround
 };

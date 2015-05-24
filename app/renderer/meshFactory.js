@@ -8,14 +8,23 @@ function createPlayer() {
     var geometry = new THREE.BoxGeometry(0.01, 0.01, 0.01);
     var material = new THREE.MeshLambertMaterial({color: getRandomColor()});
     var mesh = new THREE.Mesh(geometry, material);
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
+    // mesh.castShadow = true;
+    // mesh.receiveShadow = true;
     return mesh;
 }
 
 function createCube() {
     var geometry = new THREE.BoxGeometry(10, 10, 10);
     var material = new THREE.MeshLambertMaterial({color: getRandomColor()});
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    return mesh;
+}
+
+function createSphere() {
+    var geometry = new THREE.SphereGeometry(5, 32, 16);
+    var material = new THREE.MeshLambertMaterial({color: getRandomColor(), shading: THREE.SmoothShading});
     var mesh = new THREE.Mesh(geometry, material);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
@@ -32,25 +41,38 @@ function createTower() {
 }
 
 function createGround(props) {
+    var groundGroup = new THREE.Object3D();
     var heightMap = props.heightMap;
     var width = Math.sqrt(heightMap.length) - 1;
     var distance = 20;
-    var groundGeo = new THREE.PlaneBufferGeometry(width * distance, width * distance, width, width);
-    var groundMat = new THREE.MeshBasicMaterial({wireframe: true});
-    groundMat.color.setHSL(0.095, 1, 0.75);
-    // var vertices = groundGeo.vertices;
-    var vertices = groundGeo.attributes.position.array;
+    var geometry = new THREE.PlaneBufferGeometry(width * distance, width * distance, width, width);
+    // var geometry = new THREE.PlaneGeometry(width * distance, width * distance, width, width);
+    var material = new THREE.MeshLambertMaterial({color: 0xCCCCCC, shading: THREE.SmoothShading});
+    var vertices = geometry.attributes.position.array;
+    // var vertices = geometry.vertices;
     for ( var i = 0, j = 0, l = vertices.length; i < l; i++, j += 3 ) {
         vertices[j + 2] = heightMap[i];
+        // vertices[i].z = heightMap[i];
     }
-    var ground = new THREE.Mesh(groundGeo, groundMat);
+    // geometry.mergeVertices();
+    geometry.computeFaceNormals();
+    geometry.computeVertexNormals();
+    var ground = new THREE.Mesh(geometry, material);
+    var groundWireframe = new THREE.Mesh(
+        geometry,
+        new THREE.MeshLambertMaterial({color: 0x333333, wireframe: true, shading: THREE.SmoothShading})
+    );
+    groundGroup.add(ground);
+    groundGroup.add(groundWireframe);
     ground.receiveShadow = true;
-    return ground;
+    // ground.castShadow = true;
+    return groundGroup;
 }
 
 module.exports = {
     player: createPlayer,
     cube: createCube,
+    sphere: createSphere,
     tower: createTower,
     ground: createGround
 };

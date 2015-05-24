@@ -9,26 +9,15 @@ function createHemisphereLight() {
 }
 
 function createDirectionalLight() {
-    var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
-    dirLight.color.setHSL( 0.1, 1, 0.95 );
-    dirLight.position.set( 0, -10, 10 );
-    dirLight.position.multiplyScalar( 50 );
-
+    var dirLight = new THREE.DirectionalLight(0xffffff, 1);
+    dirLight.position.set(8, 10, 11);
+    dirLight.position.multiplyScalar(50);
     dirLight.castShadow = true;
-
-    dirLight.shadowMapWidth = 2048;
-    dirLight.shadowMapHeight = 2048;
-
-    var d = 50;
-
-    dirLight.shadowCameraLeft = -d;
-    dirLight.shadowCameraRight = d;
-    dirLight.shadowCameraTop = d;
-    dirLight.shadowCameraBottom = -d;
-
-    dirLight.shadowCameraFar = 3500;
+    dirLight.shadowCameraVisible = true;
+    dirLight.shadowMapWidth = 4096;
+    dirLight.shadowMapHeight = 4096;
     dirLight.shadowBias = -0.0001;
-    dirLight.shadowDarkness = 0.35;
+    dirLight.shadowDarkness = 0.30;
     return dirLight;
 }
 

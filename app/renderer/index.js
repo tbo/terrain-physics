@@ -12,8 +12,11 @@ var renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
+renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMapEnabled = true;
+renderer.shadowMapSoft = true;
 renderer.shadowMapCullFace = THREE.CullFaceBack;
+renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
 for(var index in lights) {
     scene.add(lights[index]);
@@ -56,8 +59,8 @@ function updatePositions(objects) {
 function updateCamera(mesh) {
     if(camera.parent !== mesh) {
         mesh.add(camera);
-        camera.rotation.z = 0;
     }
+    camera.rotation.z = 0;
 }
 
 module.exports = function (gameState) {
@@ -70,4 +73,10 @@ module.exports = function (gameState) {
 
 window.addEventListener('load', function () {
     document.body.appendChild(renderer.domElement);
+});
+
+window.addEventListener('resize', function () {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
 });

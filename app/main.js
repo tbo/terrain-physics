@@ -21,7 +21,7 @@ function gameLoop() {
         .pipe(renderer)
         .pipe(stateManager)
         .pipe(stats);
-    requestAnimationFrame(gameLoop);
+    return requestAnimationFrame(gameLoop);
 }
 
 window.addEventListener('load', loadMap(function(heightMap) {

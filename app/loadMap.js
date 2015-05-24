@@ -1,7 +1,7 @@
 var img = new Image();
 var canvas = document.createElement('canvas');
 var context = canvas.getContext('2d');
-var scale = 1;
+var scale = 0.3;
 
 module.exports = function(callback) {
     img.onload = function () {
