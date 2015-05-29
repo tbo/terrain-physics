@@ -1,4 +1,11 @@
 var THREE = require('three');
+var gunshipModel = require('./models/gunship.json');
+var jsonLoader = new THREE.JSONLoader();
+var wireframeMaterial = new THREE.MeshLambertMaterial({
+    color: 0x333333,
+    wireframe: true,
+    shading: THREE.SmoothShading
+});
 
 function getRandomColor() {
     return '#' + Math.floor(Math.random() * 16777215).toString(16);
@@ -20,6 +27,17 @@ function createCube() {
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     return mesh;
+}
+
+function createGunship() {
+    var group = new THREE.Object3D();
+    var geometry = jsonLoader.parse(gunshipModel).geometry;
+    var material = new THREE.MeshBasicMaterial({color: 0xAAAAAA});
+    var mesh = new THREE.Mesh(geometry, material);
+    var wireframe = new THREE.Mesh(geometry, wireframeMaterial);
+    group.add(mesh);
+    group.add(wireframe);
+    return group;
 }
 
 function createSphere() {
@@ -72,6 +90,7 @@ function createGround(props) {
 module.exports = {
     player: createPlayer,
     cube: createCube,
+    gunship: createGunship,
     sphere: createSphere,
     tower: createTower,
     ground: createGround

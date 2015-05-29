@@ -25,6 +25,16 @@ function createCube(props) {
     return cube;
 }
 
+function createGunship(props) {
+    var cube = new CANNON.Body({
+        mass: 0, // kg
+        position: new CANNON.Vec3(props.x, props.y, props.z)
+    });
+    cube.addShape(sphere);
+    cube.allowSleep = true;
+    return cube;
+}
+
 function createSphere(props) {
     var cube = new CANNON.Body({
         mass: 50, // kg
@@ -68,6 +78,7 @@ function createGround(props) {
 module.exports = {
     player: createPlayer,
     cube: createCube,
+    gunship: createGunship,
     sphere: createSphere,
     tower: createTower,
     ground: createGround

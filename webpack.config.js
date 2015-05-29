@@ -13,8 +13,9 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-            {test: /\.js$/, loader: 'eslint-loader', exclude: /node_modules/},
+            {test: /\.js$/, loader: 'eslint-loader', exclude: /node_modules|STLLoader/},
             {test: /\.glsl$/, loader: 'shader', exclude: /node_modules/},
+            {test: /\.stl/, loader: 'raw', exclude: /node_modules/},
             {test: /\.json$/, loader: 'json-loader'}
         ]
     },

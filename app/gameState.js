@@ -29,6 +29,7 @@ var gameState = {
     }
 };
 gameState.add('player', {x: 0, y: 5, z: 100});
+gameState.add('gunship', {x: 0, y: 40, z: 100});
 gameState.add('sphere', {x: 322, y: 250, z: 200});
 gameState.add('cube', {x: -90, y: 240, z: 300});
 // gameState.add('tower', {x: 0, y: 45, z: 100});
