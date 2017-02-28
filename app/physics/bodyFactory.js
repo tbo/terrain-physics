@@ -6,7 +6,7 @@ const sphere = new CANNON.Sphere(5);
 
 function createPlayer(props) {
   const cube = new CANNON.Body({
-    mass: 1, // kg
+    mass: 0, // kg
     angularDamping: 0.9,
     linearDamping: 0.28,
     position: new CANNON.Vec3(props.x, props.y, props.z)
