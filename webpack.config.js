@@ -1,13 +1,12 @@
+var path = require('path');
+
 module.exports = {
     context: __dirname,
     entry: './app/main.js',
     output: {
-        path: './build',
+        path: path.join(__dirname, 'build'),
         publicPath: '/assets/',
         filename: 'client.js'
-    },
-    eslint: {
-        configFile: '.eslintrc'
     },
     devtool: 'eval',
     module: {
@@ -18,8 +17,5 @@ module.exports = {
             {test: /\.stl/, loader: 'raw', exclude: /node_modules/},
             {test: /\.json$/, loader: 'json-loader'}
         ]
-    },
-    glsl: {
-        chunkPath: ''
     }
 };
