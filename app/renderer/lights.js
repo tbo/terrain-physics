@@ -13,11 +13,6 @@ function createDirectionalLight() {
     dirLight.position.set(8, 10, 11);
     dirLight.position.multiplyScalar(50);
     dirLight.castShadow = true;
-    dirLight.shadowCameraVisible = true;
-    dirLight.shadowMapWidth = 4096;
-    dirLight.shadowMapHeight = 4096;
-    dirLight.shadowBias = -0.0001;
-    dirLight.shadowDarkness = 0.30;
     return dirLight;
 }
 

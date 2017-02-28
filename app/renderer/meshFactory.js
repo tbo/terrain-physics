@@ -12,12 +12,12 @@ function getRandomColor() {
 }
 
 function createPlayer() {
-    var geometry = new THREE.BoxGeometry(0.01, 0.01, 0.01);
-    var material = new THREE.MeshLambertMaterial({color: getRandomColor()});
-    var mesh = new THREE.Mesh(geometry, material);
-    // mesh.castShadow = true;
-    // mesh.receiveShadow = true;
-    return mesh;
+  var geometry = new THREE.BoxGeometry(0.01, 0.01, 0.01);
+  var material = new THREE.MeshLambertMaterial({depthWrite: false, color: getRandomColor()});
+  var mesh = new THREE.Mesh(geometry, material);
+  // mesh.castShadow = true;
+  // mesh.receiveShadow = true;
+  return mesh;
 }
 
 function createCube() {

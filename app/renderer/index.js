@@ -13,10 +13,10 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.shadowMapEnabled = true;
-renderer.shadowMapSoft = true;
-renderer.shadowMapCullFace = THREE.CullFaceBack;
-renderer.shadowMapType = THREE.PCFSoftShadowMap;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.soft = true;
+renderer.shadowMap.renderReverseSided = false;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 for(var index in lights) {
     scene.add(lights[index]);

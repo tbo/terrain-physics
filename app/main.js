@@ -1,18 +1,18 @@
-var renderer = require('./renderer');
-var controls = require('./controls');
-var timing = require('./timing');
-var physics = require('./physics');
-var gameState = require('./gameState');
-var stateManager = require('./stateManager');
-var stats = require('./stats');
-var loadMap = require('./loadMap');
+const renderer = require('./renderer');
+const controls = require('./controls');
+const timing = require('./timing');
+const physics = require('./physics');
+const gameState = require('./gameState');
+const stateManager = require('./stateManager');
+const stats = require('./stats');
+const loadMap = require('./loadMap');
 
 /*eslint-disable*/
-function echo(g) { console.log(g.player.body.position); }
+const echo = g => console.log(g.player.body.position)
 /*eslint-enable*/
 
 
-function gameLoop() {
+const gameLoop = () => {
     gameState
         .pipe(timing)
         .pipe(controls)
@@ -24,7 +24,7 @@ function gameLoop() {
     return requestAnimationFrame(gameLoop);
 }
 
-window.addEventListener('load', loadMap(function(heightMap) {
+window.addEventListener('load', loadMap(heightMap => {
     gameState.add('ground', {static: true, heightMap});
     window.gameState = gameState;
     gameLoop();
