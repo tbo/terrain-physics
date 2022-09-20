@@ -1,11 +1,11 @@
-const renderer = require('./renderer');
-const controls = require('./controls');
-const timing = require('./timing');
-const physics = require('./physics');
-const gameState = require('./gameState');
-const stateManager = require('./stateManager');
-const stats = require('./stats');
-const loadMap = require('./loadMap');
+import renderer from './renderer';
+// import controls from './controls';
+import timing from './timing';
+import physics from './physics';
+import gameState from './gameState';
+import stateManager from './stateManager';
+// import stats from './stats';
+import loadMap from './loadMap';
 
 /*eslint-disable*/
 const echo = g => console.log(g.player.body.position)
@@ -13,14 +13,13 @@ const echo = g => console.log(g.player.body.position)
 
 
 const gameLoop = () => {
-    gameState
-        .pipe(timing)
-        .pipe(controls)
+    gameState.pipe(timing)
+        // .pipe(controls)
         .pipe(physics)
         // .pipe(echo)
         .pipe(renderer)
         .pipe(stateManager)
-        .pipe(stats);
+        // .pipe(stats);
     return requestAnimationFrame(gameLoop);
 }
 

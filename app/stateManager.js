@@ -1,5 +1,5 @@
 let currentItem;
-module.exports = gameState => {
+export default gameState => {
   while((currentItem = gameState.bootstrapping.pop()) !== undefined) {
     if (!currentItem.props.static) {
       gameState.objects.push(currentItem);

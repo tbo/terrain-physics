@@ -1,14 +1,14 @@
-var THREE = require('three');
-var lights = require('./lights');
-var scene = new THREE.Scene();
-var meshFactory = require('./meshFactory');
+import { Scene, PerspectiveCamera, Vector3, WebGLRenderer, PCFSoftShadowMap } from 'three';
+import * as lights from './lights';
+var scene = new Scene();
+import * as meshFactory from './meshFactory';
 
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 0;
 camera.position.y = -1;
-camera.lookAt(new THREE.Vector3(0, 0, 0));
+camera.lookAt(new Vector3(0, 0, 0));
 
-var renderer = new THREE.WebGLRenderer({antialias: true});
+var renderer = new WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
@@ -16,7 +16,7 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.soft = true;
 renderer.shadowMap.renderReverseSided = false;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = PCFSoftShadowMap;
 
 for(var index in lights) {
     scene.add(lights[index]);
@@ -63,7 +63,7 @@ function updateCamera(mesh) {
     camera.rotation.z = 0;
 }
 
-module.exports = function (gameState) {
+export default function (gameState) {
     bootstrappingObjects(gameState.bootstrapping);
     updatePositions(gameState.objects);
     updateCamera(gameState.player.mesh);

@@ -32,4 +32,4 @@ gameState.add('cube', {x: -90, y: 240, z: 300});
 // gameState.add('tower', {x: -20, y: 20, z: 20});
 gameState.state.player = gameState.state.bootstrapping[0];
 
-module.exports = gameState;
+export default gameState;

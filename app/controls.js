@@ -1,5 +1,5 @@
-const fullscreen = require('fullscreen');
-const lock = require('pointer-lock');
+import fullscreen from 'fullscreen';
+// import lock from 'pointer-lock';
 
 const KEYCODE_SPACE = 32;
 const KEYCODE_LEFT = 37;
@@ -24,7 +24,7 @@ let pointerDy;
 
 window.addEventListener('load', function() {
   const fs = fullscreen(document.body);
-  pointer = lock(document.body);
+  // pointer = lock(document.body);
   document.addEventListener('click', function() {
     fs.request();
   });
@@ -63,7 +63,7 @@ const onKey = v => event => {
 document.addEventListener('keydown', onKey(true), false);
 document.addEventListener('keyup', onKey(false), false);
 
-module.exports = function(gameState) {
+export default function(gameState) {
   gameState.player.movement.up = up;
   gameState.player.movement.forward = forward;
   gameState.player.movement.backward = backward;
