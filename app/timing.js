@@ -1,4 +1,4 @@
-module.exports = function(gameState) {
+export default function(gameState) {
     var now = (new Date()).getTime();
 
     if(!gameState.timing) {

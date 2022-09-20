@@ -1,8 +1,9 @@
-const CANNON = require('cannon');
-const bodyFactory = require('./bodyFactory');
-const world = new CANNON.World();
+import { World, NaiveBroadphase, Vec3 } from 'cannon';
+import * as bodyFactory from './bodyFactory';
+
+const world = new World();
 world.gravity.set(0, 0, -9.82);
-world.broadphase = new CANNON.NaiveBroadphase();
+world.broadphase = new NaiveBroadphase();
 world.solver.iterations = 1;
 world.allowSleep = true;
 world.defaultContactMaterial.contactEquationStiffness = 1e8;
@@ -30,13 +31,13 @@ function removeObjects(tombstoned) {
 }
 
 const yawForce = 1.2;
-const worldPoint = new CANNON.Vec3(0, 0, 0);
-const nosePoint = new CANNON.Vec3(0, 0.5, 0);
-const rollPoint = new CANNON.Vec3(0, 0, -0.5);
-const rollImpulse = new CANNON.Vec3(0, 0, 0);
-const centerImpulse = new CANNON.Vec3(0, 0, 0);
-const baseImpulse = new CANNON.Vec3(0, 0, 0);
-const noseImpulse = new CANNON.Vec3(0, 0, 0);
+const worldPoint = new Vec3(0, 0, 0);
+const nosePoint = new Vec3(0, 0.5, 0);
+const rollPoint = new Vec3(0, 0, -0.5);
+const rollImpulse = new Vec3(0, 0, 0);
+const centerImpulse = new Vec3(0, 0, 0);
+const baseImpulse = new Vec3(0, 0, 0);
+const noseImpulse = new Vec3(0, 0, 0);
 function movePlayer(player, delta) {
   const movement = player.movement,
       velocity = player.body.velocity,
@@ -77,7 +78,7 @@ function movePlayer(player, delta) {
   player.body.applyLocalImpulse(noseImpulse, nosePoint);
 }
 
-module.exports = gameState => {
+export default gameState => {
   bootstrappingObjects(gameState.bootstrapping);
   movePlayer(gameState.player, gameState.timing.delta);
   world.step(1.0 / 60.0, gameState.timing.delta / 1000, 10);

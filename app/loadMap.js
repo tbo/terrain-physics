@@ -3,7 +3,7 @@ const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
 const scale = 0.3;
 
-module.exports = function(callback) {
+export default function(callback) {
   img.onload = function () {
     const size = img.width * img.height;
     const data = new Float32Array(size);
